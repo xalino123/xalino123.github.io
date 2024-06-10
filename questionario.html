@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="-1"/>
+		<title>Questionario</title>
+		<style type="text/css">
+			#log{
+				  border: 2px solid black;
+				  height: 370px;
+				  width: 500px;
+				  background-color: lightblue;    
+				  text-align: center;
+				}
+			button {
+				margin-left: 20px
+			}
+			#stamp{
+				background-color: white;
+				font-family: sans-serif; 
+			}
+		</style>
+		<script type="text/javascript">
+		
+			function startTime(){
+				intervalID = setInterval(updateTime, 1);
+			}
+			
+			function updateTime(){
+				document.getElementById("timeParagraf").innerHTML="Orario: "+new Date();
+			}
+			
+			function log(frame){
+				var pageLog = document.getElementById("log");
+				var length = pageLog.children.length;
+				var i=0;
+				var count=0;
+				
+				if(frame.name=="clear"){
+					for(i=0; i<length;i=i+1){
+						pageLog.children[0].remove();
+					}
+				}else{
+					if(length == 10){
+						pageLog.children[0].remove();	
+					}
+						
+					var newLog=document.createElement('p');
+					newLog.innerHTML=frame.name+" "+frame.value;
+					
+					pageLog.appendChild(newLog);	
+				}
+			}
+			
+			function changeText(frame){
+				var par=document.getElementById("stamp");
+				
+				if(frame.name=="sceltaColore"){
+					switch(frame.value){
+					case "W": par.style.backgroundColor="white"; break;
+					case "G": par.style.backgroundColor="#9FF789"; break;
+					case "R": par.style.backgroundColor="#F78991"; break;
+					case "B": par.style.backgroundColor="#89C0F7"; break;
+					}
+				}
+				if(frame.name=="sans"){
+					if(frame.value=="yes"){
+						par.style.fontFamily="serif";
+					}else if(frame.value=="no"){
+						par.style.fontFamily="sans-serif";
+					}
+				}
+			}
+		
+		</script>
+
+	</head>
+	<body onload="startTime()">
+		<table cellspacing=20 border="1">
+			<form id="Questionario">
+				<p>Questionario:</p>
+				<tr>
+					<th colspan="50">
+						<p id="timeParagraf"></p>
+					</th>
+				</tr>
+				<tr>
+					<th>
+						Il tuo nome:</br>
+						<input type="text" name="nome" size="15" oninput="log(this)">
+					</th>
+					<th>
+						La parola d'ordine:</br>
+						<input type="text" name="password" size="15" oninput="log(this)">
+					</th>
+					<th>
+						Scegli il file:</br>
+						<input type="file" name="sceltaFile" size="15" oninput="log(this)">
+					</th>
+					<th>
+						Figlio preferito:</br>
+						<input type="checkbox" name="figlio" size="15" value="bart" oninput="log(this)"> Bart </br>
+						<input type="checkbox" name="figlio" size="15" value="lisa" oninput="log(this)"> Lisa </br>
+						<input type="checkbox" name="figlio" size="15" value="bart" oninput="log(this)"> Bart </br>
+					</th>
+				</tr>
+				<tr>
+					<th>
+						Il tuo colore preferito:</br>
+						<select name="sceltaColore" oninput="changeText(this)">
+							<option value="W" selected="selected">Bianco</option>
+							<option value="G">Verde</option>
+							<option value="R">Rosso</option>
+							<option value="B">Blù</option>
+						</select>
+					</th>
+					<th rowspan="">
+						Sans o no?:</br>
+						<input type="radio" name="sans" value="yes" oninput="changeText(this)"> Sans</br>
+						<input type="radio" name="sans" value="no" oninput="changeText(this)"> No sans</br>
+					</th>
+					<th colspan="2" rowspan="3">
+						<div id="log"></div>
+					</th>
+				</tr>
+				<tr></tr>
+				<tr></tr>
+				<tr>
+					<th colspan="2">
+						<button type="submit" onclick="submit(this)">Invia</button>
+						<button type="reset">Reset</button>
+						<button type="button" name="clear" onclick="log(this)">Svuota log</button>
+					</th>
+				</tr>
+				<tr>
+					<th colspan="4">
+						<p id="stamp" color="red">Qui ci sarebbe la stampa se questa fosse una pagina dinamica</p>
+					</th>
+				</tr>
+			</form>
+		</table>
+	</body>
+
+</html>
